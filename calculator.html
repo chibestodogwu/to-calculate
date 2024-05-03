@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Calculator By Chibest Odogwu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        
+        .calculator {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .output {
+            width: calc(100% - 40px);
+            margin-bottom: 10px;
+            padding: 10px;
+            font-size: 1.5em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            text-align: right;
+        }
+        
+        table {
+            width: 100%;
+            table-layout: fixed;
+        }
+        
+        button {
+            width: 100%;
+            padding: 15px 0;
+            margin: 5px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            background-color: red;
+            color: #fff;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: black;
+        }
+        
+        button:active {
+            transform: translateY(1px);
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="calculator" style="border: 50px solid black;">
+        <h2>SCIENTIFIC CALCULATOR</h2>
+
+        <input type="text" style="border:20px solid black;color:white;background-color:red" id="output"  class="output" disabled placeholder="0">  
+        <table>
+            <tr>
+                <td colspan="2"><button onclick="clearOutput()">CLEAR ALL</button></td>
+                <td><button onclick="deleteLast()">CE</button></td>
+                <td><button onclick="appendOperator('+')">+</button></td>
+            </tr>
+            <tr>
+                <td><button onclick="appendNumber('7')">7</button></td>
+                <td><button onclick="appendNumber('8')">8</button></td>
+                <td><button onclick="appendNumber('9')">9</button></td>
+                <td><button onclick="appendOperator('-')">-</button></td>
+            </tr>
+            <tr>
+                <td><button onclick="appendNumber('4')">4</button></td>
+                <td><button onclick="appendNumber('5')">5</button></td>
+                <td><button onclick="appendNumber('6')">6</button></td>
+                <td><button onclick="appendOperator('*')">*</button></td>
+            </tr>
+            <tr>
+                <td><button onclick="appendNumber('1')">1</button></td>
+                <td><button onclick="appendNumber('2')">2</button></td>
+                <td><button onclick="appendNumber('3')">3</button></td>
+                <td><button onclick="appendOperator('/')">/</button></td>
+            </tr>
+            <tr>
+                <td><button onclick="appendNumber('0')">0</button></td>
+                <td><button onclick="appendDot()">.</button></td>
+                <td><button onclick="appendScientific('Math.sqrt(')">√</button></td>
+                <td><button onclick="appendOperator('Math.pow(')">^</button></td>
+            </tr>
+            <tr>
+                <td><button onclick="appendScientific('Math.sin(')">sin</button></td>
+                <td><button onclick="appendScientific('Math.cos(')">cos</button></td>
+                <td><button onclick="appendScientific('Math.tan(')">tan</button></td>
+                <td><button onclick="appendOperator('Math.log(')">log</button></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button onclick="calculate()">=</button></td>
+            </tr>
+        </table>
+    </div>
+
+    <script type="text/javascript">
+        let output = document.getElementById('output');
+        let expression = '';
+
+        function appendNumber(number) {
+            expression += number;
+            output.value = expression;
+        }
+
+        function appendOperator(operator) {
+            if (expression !== '' && !isNaN(expression[expression.length - 1])) {
+                expression += operator;
+                output.value = expression;
+            }
+        }
+
+        function appendDot() {
+            if (expression === '' || isNaN(expression[expression.length - 1])) {
+                expression += '0.';
+            } else if (!expression.includes('.')) {
+                expression += '.';
+            }
+            output.value = expression;
+        }
+
+        function clearOutput() {
+            expression = '';
+            output.value = '';
+        }
+
+        function deleteLast() {
+            expression = expression.slice(0, -1);
+            output.value = expression;
+        }
+
+        function calculate() {
+            try {
+                let result = eval(expression);
+                output.value = result;
+                expression = result.toString();
+            } catch (error) {
+                output.value = 'Error';
+                expression = '';
+            }
+        }
+
+        function appendScientific(func) {
+            expression += func;
+            output.value = expression;
+        }
+    </script>
+</body>
+</html>
